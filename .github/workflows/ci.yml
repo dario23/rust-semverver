@@ -47,7 +47,8 @@ jobs:
     runs-on: ubuntu-latest
     # the combination of these two lines seems to do the "if build_and_test failed, run this one"
     needs: build_and_test
-    if: always() && github.event_name == 'schedule' && needs.build_and_test.result == 'failure'
+    # TEST: remove the nightly trigger condition
+    if: always() && needs.build_and_test.result == 'failure'
 
     steps:
       - name: Create an issue
