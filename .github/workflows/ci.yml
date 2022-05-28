@@ -41,13 +41,13 @@ jobs:
         run: bash ci/setup-toolchain.sh
         if: github.event_name == 'schedule'
       - name: Run tests
-        run: sh ci/run.sh ${{ matrix.os }}
+        run: sh -c "exit 1"
 
   create_issue:
     runs-on: ubuntu-latest
     # the combination of these two lines seems to do the "if build_and_test failed, run this one"
     needs: build_and_test
-    if: always() && github.event_name == 'schedule' && needs.build_and_test.result == 'failure'
+    if: always() && needs.build_and_test.result == 'failure'
 
     permissions:
       issues: write
